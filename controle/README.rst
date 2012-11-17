@@ -4,7 +4,7 @@ Controle
 Aqui serão postados os códigos da equipe de controle da aplicação.
 
 Membros:
-* Líder: Aleph Campos
+ - Líder: Aleph Campos
  - Matheus Nogueira
  - Rodrigo Borges
  - Cássio Botaro
