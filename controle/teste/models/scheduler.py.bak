@@ -1,0 +1,9 @@
+# coding: utf8
+
+
+def teste():
+    import webbrowser
+    webbrowser.open("http://www.google.com")
+
+from gluon.scheduler import Scheduler
+myscheduler = Scheduler(db,dict(func=teste))

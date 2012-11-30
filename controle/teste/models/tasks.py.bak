@@ -1,0 +1,9 @@
+# coding: utf8
+
+
+def func():
+    import webbrowser
+    webbrownser.open("http://www.google.com.br")
+    
+from gluon.scheduler import Scheduler
+Scheduler(db,dict(function=func))

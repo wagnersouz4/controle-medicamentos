@@ -1,0 +1,17 @@
+[2012-11-28 21:45:01] START
+[2012-11-28 21:45:12] CREATE agendador.py: 0
+[2012-11-28 21:49:10] EDIT teste/models/agendador.py: 5
+[2012-11-28 21:50:18] EDIT teste/models/agendador.py: 0
+[2012-11-28 21:51:58] DELETE teste/models/agendador.py: -5
+[2012-11-28 21:52:54] CREATE agendador.py: 0
+[2012-11-28 21:53:03] EDIT teste/models/agendador.py: 5
+[2012-11-28 21:53:46] DELETE teste/models/agendador.py: -5
+[2012-11-28 21:54:02] CREATE tasks.py: 0
+[2012-11-28 21:54:10] EDIT teste/models/tasks.py: 5
+[2012-11-28 21:55:56] EDIT teste/models/tasks.py: 0
+[2012-11-29 08:53:40] DELETE teste/models/tasks.py: -5
+[2012-11-29 08:54:49] CREATE scheduler.py: 0
+[2012-11-29 08:55:26] EDIT teste/models/scheduler.py: 2
+[2012-11-29 09:03:30] EDIT teste/models/scheduler.py: 3
+[2012-11-29 09:03:56] EDIT teste/models/scheduler.py: 0
+[2012-11-30 17:01:53] EDIT teste/models/scheduler.py: 0

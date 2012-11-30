@@ -4,9 +4,11 @@ Controle
 Aqui serão postados os códigos da equipe de controle da aplicação.
 
 Membros:
- - Líder: Aleph Campos
- - Matheus Nogueira
- - Rodrigo Borges
+ - Líder: Matheus Nogueira
+ - Aleph Campos
  - Cássio Botaro
+ - Rodrigo Borges
+ - Wagner Souza
 
-* Nossa meta atual é desenvolver agendamento de tarefas para o sistema operacional Windows.
+
+* Nossa meta atual é desenvolver e testar aplicações utilizando web2py e o agendamento de tarefas(Scheduler).
