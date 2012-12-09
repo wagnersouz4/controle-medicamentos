@@ -1,0 +1,34 @@
+//elementos meramente fictícios para modelagem de dados
+//Modelagem prevista para usuarios
+{
+  'nome':'celio',
+  'medicamentos':[
+           {
+             'nome': 'Fluxotina',
+             'tipo': 'antibiotico',
+             'qtd': 1,
+             'dose': 200,
+             'medida': 'mg',
+             'turno': ['noite','manha']
+
+            },
+            {
+             'nome': 'Litio',
+             'tipo': 'vitamina',
+             'qtd': 2,
+             'dose': 100,
+             'medida': 'ml',
+             'turno': ['manha']
+           }
+          ]
+
+}
+
+//Modelagem prevista para medicamentos
+{
+    'nome': 'Fluxotina',
+    'tipo': 'antibiotico',
+    'dose': 100,
+    'medida': 'mg',
+    'qtd_estoque': 50
+}
