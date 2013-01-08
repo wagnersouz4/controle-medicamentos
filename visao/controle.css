@@ -1,0 +1,55 @@
+div.blackborder{
+	position: absolute;
+	top:0px;
+	left:0px;
+	border-bottom-color: #666;
+	border-top-color: #666;
+	border-bottom-color: black;
+	font-family: 'Trebuchet MS';
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	height: 29px;
+	line-height: normal;
+	width: 100%;
+	background-color: black;
+}
+
+div.principal{
+	position: absolute;
+	position: fixed !important;
+	top: 0px;
+	left: 0px;
+	z-index: 10;
+	top:29px;
+	left: 0px;
+	width: 1370px;
+	height:100%;
+	font-family: 'Trebuchet MS';
+	font-size: 36px;
+	text-shadow: 0px 2px 3px #666;
+}
+
+a{
+	text-decoration:none;
+	color:white;
+}
+
+
+div.textoblackborder a:hover{
+
+	text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de; /*Estilo neon*/ 
+}
+
+div.textoblackborder{
+	position: absolute;
+	top:6px;
+	left: 75%;
+	font-family: 'Trebuchet MS';
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	color: white;
+}
