@@ -2,11 +2,8 @@
 *.pyc
 *~
 *.swp
-*/applications/sentibol/cache/**
-*/applications/sentibol/erros/**
-*/applications/sentibol/sessions/**
+/cache/**
+/erros/**
+/sessions/**
+/databases/**
 *.log
-web2py/gluon/**
-web2py/scripts/**
-web2py/site-packages/**
-web2py/*.*
