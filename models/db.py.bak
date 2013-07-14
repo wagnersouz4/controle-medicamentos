@@ -33,9 +33,6 @@ from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
-## create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
-
 ## configure email
 mail = auth.settings.mailer
 mail.settings.server = 'logging' or 'smtp.gmail.com:587'
@@ -96,18 +93,7 @@ Medicamentos.concentracao.requires = IS_NOT_EMPTY()
 Medicamentos.medicamento_referencia.requires = IS_NOT_EMPTY()
 Medicamentos.forma_farmaceutica.requires = IS_NOT_EMPTY()
 
-class IS_TIME_LIST(object):
-    def __init__(self, error_message="Horario %s é inválido.", sep=","):
-        self.error_message = error_message
-        self.sep = sep
 
-    def __call__(self, value):
-            times = value.strip().replace('\n','').replace('\t','').split(self.sep)
-            for time in times:
-                time = time.strip()
-                if IS_TIME()(time)[1]!= None:
-                    return (time, self.error_message % time)
-            return (times, None)
 
 Estoque = db.define_table('estoque',
                            Field('id_instituicao', 'reference auth_user'),
@@ -127,4 +113,120 @@ PacienteMedicamento = db.define_table('paciente_medicamento',
 PacienteMedicamento.id_paciente.requires = IS_IN_DB(db,'pacientes.id','%(nome)s')   
 PacienteMedicamento.id_medicamento.requires = IS_IN_DB(db,'medicamentos.id','%(farmaco)s')                                    
 PacienteMedicamento.posologia.requires = IS_NOT_EMPTY()
-PacienteMedicamento.horarios.requires = IS_TIME_LIST()
+
+#Criando funções de validação
+
+#Validação para CEP
+class IS_VALID_CEP(object):
+    def __init__(self, error_message=T('CEP INVÁLIDO')):
+        self.error_message=error_message
+        
+    def __call__(self, value):
+        error=None
+        cep_temp = []
+        try:
+            #Coletando todos os números
+            for cp in value:
+                if cp.isdigit():
+                    cep_temp.append(cp)
+            if len(cep_temp) == 8:
+                return (self.to_cep(cep_temp), None)
+            error = self.error_message
+            return (value, error)
+        except e:
+            self.error_message = e
+            return(value, self.error_message)
+        
+    #Formata para ddddd-ddd
+    def to_cep(self, cep):
+        return str(cep[0:5])+'-'+str(cep[5:])
+
+#Validação CNPJ
+class IS_VALID_CNPJ(object):
+    def __init__(self, error_message=T('CNPJ INVÁLIDO')):
+        self.error_message = error_message
+        
+    def __call__(self, value):
+        error=None
+        
+        if len(value) != 14:
+            return(value, self.error_message)
+           
+        digito1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+        digito2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+        
+        mul_digito1 = []
+        
+        for i,j in zip(value[:12],digito1):
+            mul_digito1.append(int(i)*j)
+        
+        #somando valores
+        sum_digito1 = 0
+        for i in mul_digito1:
+            sum_digito1 = sum_digito1 + i
+            
+        resto = sum_digito1%11
+        if resto<2:
+           digito1 = 0
+        else:
+           digito1 = 11 - resto
+           
+        if value[12] !=  digito1:
+            return(value, self.error_message)
+            
+        novo_value = value[:12]+digito1
+        
+        mult_digito2 = []
+        
+        for i,j in zip(novo_value,digito2):
+            mult_digito2.append(int(i)*j)
+       
+        sum_digito2 = 0
+        for i in mul_digito2:
+            sum_digito2 = sum_digito2+i
+            
+        resto = sum_digito2%11
+            
+        if resto<2:
+            digito2 = 0
+        else:
+            digito2 = 11 - resto
+        
+        if value[13] == digito2:
+            return(value, None)
+        else:
+            return (value, self.error_message)
+         
+            
+           
+       
+        
+        
+
+#Adicionando campos extras na table auth_user
+auth.settings.extra_fields['auth_user']= [
+    Field("endereco", label='Endereço'),
+    Field("cidade", length=100),
+    Field("cep", length=9, label='CEP'),
+    Field("telefone", length=13),
+    Field("cnpj", length=18, label='CNPJ'),
+    Field("pais", length=6, default='Brasil', label='País')]
+
+#Campos que irão aparecer na tela de registro
+auth.settings.register_fields = [
+    'first_name', 'email', 'password', 'telefone', 'endereco', 
+    'cidade', 'cep', 'pais', 'cnpj']
+
+## create all tables needed by auth if not custom tables    
+auth.define_tables(username=False, signature=False)
+
+#Aterando nomes de campos default da tabela auth_user
+db.auth_user.first_name.label = "Instituição"
+
+#Criando validações
+db.auth_user.endereco.requires = IS_NOT_EMPTY()
+db.auth_user.cidade.requires = IS_NOT_EMPTY()
+db.auth_user.cep.requires = [IS_NOT_EMPTY(), IS_VALID_CEP()]
+db.auth_user.telefone.requires = IS_NOT_EMPTY()
+db.auth_user.cnpj.requires = [IS_NOT_EMPTY(), IS_VALID_CNPJ()]
+db.auth_user.pais.requires = IS_NOT_EMPTY()
