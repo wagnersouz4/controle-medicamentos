@@ -217,8 +217,6 @@ PacienteMedicamento.posologia.requires = IS_NOT_EMPTY()
 # Criando funções de validação
 
 # Validação para CEP
-
-
 class IS_VALID_CEP(object):
 
     def __init__(self, error_message=T('CEP INVÁLIDO')):
@@ -242,7 +240,8 @@ class IS_VALID_CEP(object):
 
     # Formata para ddddd-ddd
     def to_cep(self, cep):
-        return str(cep[0:5]) + '-' + str(cep[5:])
+        cep = ''.join(cep)
+        return cep[0:5] + '-' + cep[5:]
 
 # Validação CNPJ
 
@@ -252,9 +251,11 @@ class IS_VALID_CNPJ(object):
     def __init__(self, error_message=T('CNPJ INVÁLIDO')):
         self.error_message = error_message
 
-    def __call__(self, value):
-        error = None
+    def format(self, value):
+        return value[:2]+"."+value[2:5]+"."+value[5:8]+"/"+value[8:12]+"-"+value[-2:]
 
+    def __call__(self, value):
+        
         if len(value) != 14:
             return(value, "Tamanho inválido")
 
@@ -304,6 +305,7 @@ class IS_VALID_CNPJ(object):
         verificador = value[-2:]
 
         if verificador == digito1 + digito2:
+            value = self.format(value)
             return(value, None)
         else:
             return (value, self.error_message)
